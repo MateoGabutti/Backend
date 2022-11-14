@@ -1,11 +1,10 @@
-const {productos} = require('./contendor.js');
+const {productos} = require('./conteiner.js');
 const EXPRESS = require('express');
 const APP = EXPRESS();
 const PORT =  process.env.PORT || 8080;
 APP.listen(PORT, () => console.log(`URL del server: http://localhost:${PORT}`));
-//Configuracion de rutas
 APP.get("/", (req, res) => {
-    res.send("<h3>Las rutas disponibles son /productos y /productoRandom</h3>")
+    res.send("<h1>Las rutas disponibles son /productos y /productoRandom</h1>")
 })
 APP.get("/productos", async(req, res) => {
     try{
