@@ -1,25 +1,14 @@
-const {productos} = require('./conteiner.js');
-const EXPRESS = require('express');
-const APP = EXPRESS();
-const PORT =  process.env.PORT || 8080;
-APP.listen(PORT, () => console.log(`URL del server: http://localhost:${PORT}`));
-APP.get("/", (req, res) => {
-    res.send("<h1>Las rutas disponibles son /productos y /productoRandom</h1>")
+const express = require('express');
+const app = express();
+const PORT = 8080;
+const svRoutes = require("./routes");
+app.use("/", express.static('public'));
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+svRoutes(app);
+app.use((err, req, res, next) => {
+    console.error(err.message);
+    res.status(500).send(`Error en ${err.message}`)
 })
-APP.get("/productos", async(req, res) => {
-    try{
-        const todos = await productos.getAll() 
-        res.send(todos)
-    } catch(error) {
-        res.send(error)
-    }
-});
-APP.get("/productoRandom", async (req, res) => {
-    const idGenerado = Math.round(Math.random() * 3)
-    try{
-        const productoAzar = await productos.getById(idGenerado)
-        res.send(productoAzar)
-    } catch(error) {
-        res.send(error)
-    }
-});
+app.listen(PORT, () => console.log(`La URL del servidor es: http://localhost:${PORT}`));
