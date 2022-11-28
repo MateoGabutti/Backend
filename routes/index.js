@@ -1,50 +1,32 @@
 const { Router} = require("express");
-const { productos } = require('../contenedor.js')
+const { productos } = require('../conteiner.js')
+const multer = require('multer');
 const router = new Router();
+const multerUpload = multer();
 
 module.exports = app => {
-    app.use("/api/productos", router);
+    app.use("/productos", router);
+
+    app.get("/", async (req, res, next) => {
+        res.render("index", {})
+    });
 
     router.get("/", async (req, res, next) => {
         try {
-            const totalProductos = await productos.getAll()
-            res.send(JSON.stringify(totalProductos));
+            const arrProd = await productos.getAll();
+            res.render("productos", {objetos: arrProd})
         } catch (error) {
-            next(error);
+            console.log("error en get /productos");
+            next(error)
         }
     });
 
-    router.get("/:id", async (req, res, next) => {
-        const {id} = req.params;
-        try {
-            const resultado = await productos.getById(Number(id));
-            res.send(JSON.stringify(resultado));
-        } catch (error) {
-            console.log("error en /api/productos/:id");
-            next(error);
-        }
-        
-    });
-
-    router.post("/", async (req, res, next) => {
+    router.post("/",multerUpload.none(), async (req, res, next) => {
         try {
             await productos.save(req.body);
-            res.send(JSON.stringify(req.body));
+            res.redirect("/");
         } catch (error) {
             next(error);
-        }
-    })
-
-    router.put("/:id", async (req, res, next) => {
-        const { id } = req.params;
-        const idNum = Number(id);
-        const {title, price, thumbnail} = req.body;
-        const productoActualizado = { title, price, thumbnail, id: idNum }
-        try {
-            productos.update(productoActualizado)
-            res.send(`El producto ${id} fue actualizado`)
-        } catch (error) {
-            next(error)
         }
     })
 
@@ -57,5 +39,4 @@ module.exports = app => {
             next(error);
         }
     })
-
 }
