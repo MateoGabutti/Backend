@@ -87,7 +87,7 @@ class Contenedor {
 }
 
 
-const productos = new Contenedor("productos.txt")
+const productos = new Contenedor("productos.json")
 
 
 const obj = {
@@ -101,4 +101,4 @@ const obj2 = {
     thumbnail: "https://www.fullh4rd.com.ar/img/productos/Pics_Prod/teclado-hp-hyperx-alloy-origins-65-mecanico-4p5d6aa-0.jpg"
 }
 
-module.exports = { productos }
+export default productos;

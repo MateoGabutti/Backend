@@ -1,0 +1,19 @@
+[
+    {
+        "timestamp": 1671448376649,
+        "id": 2,
+        "productos": [
+          {
+              "title": "TECLADO HP HYPERX ALLOY ORIGINS 65 MECANICO 4P5D6AA",
+              "price": 13990,
+              "thumbnail": "https://www.fullh4rd.com.ar/img/productos/Pics_Prod/teclado-hp-hyperx-alloy-origins-65-mecanico-4p5d6aa-0.jpg",
+              "id": 2
+            }
+        ]
+      },
+    {
+      "timestamp": 1671448364376,
+      "id": 3,
+      "productos": []
+    }
+  ]
